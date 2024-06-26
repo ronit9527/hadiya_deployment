@@ -1,0 +1,22 @@
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: hadiya-ingress
+  annotations:
+    alb.ingress.kubernetes.io/group.name: test
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/subnets: subnet-0cda39514c6c78b48,subnet-0c11c2ba063616687
+spec:
+  rules:
+    - host: project2.infydevops.work.gd # Replace with your actual domain or IP
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: hadiya-service # Name of your Service
+                port:
+                  number: 80 # Port your Service listens on
