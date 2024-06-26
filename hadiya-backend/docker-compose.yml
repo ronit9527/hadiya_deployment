@@ -1,0 +1,32 @@
+version: '3'
+services:
+  products_api:
+    image: shoaib1999/hadiya-api
+    ports:
+      - 3001:3000
+    environment:
+      - PORT:3000
+      - DB_CONNECTION_STRING=mysql://shoaib:Shoaib123@products_database:3306/hadiya_products
+    networks:
+      - hadiya_net
+  products_database:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=toor
+      - MYSQL_USER=shoaib
+      - MYSQL_PASSWORD=Shoaib123
+      - MYSQL_DATABASE=hadiya_products
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - hadiya_net
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  hadiya_net:
+    driver: bridge
