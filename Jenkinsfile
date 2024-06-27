@@ -5,8 +5,9 @@ pipeline {
         REGION = "us-west-1"
         REPOSITORY_NAME = "hadiya"
         IMAGE_TAG = "${env.BUILD_NUMBER}"
-        ECR_URI = "730335380624.dkr.ecr.${REGION}.amazonaws.com/${REPOSITORY_NAME}:${IMAGE_TAG}"
-        ECR_REGISTRY = "730335380624.dkr.ecr.${REGION}.amazonaws.com"
+        ECR_URI = "public.ecr.aws/x8p9m7t4/hadiya/${REPOSITORY_NAME}:${IMAGE_TAG}"
+        ECR_REGISTRY = "public.ecr.aws/x8p9m7t4"
+        
     }
     
     stages {
@@ -33,7 +34,7 @@ pipeline {
                 script {
                     // Login to Amazon ECR
                     sh '''
-                        aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY}
+                        aws ecr-public get-login-password --region ${REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY}
                     '''
                 }
             }
