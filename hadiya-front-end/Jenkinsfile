@@ -23,7 +23,7 @@ pipeline {
                 script {
                     // Install project dependencies
                     sh '''
-                        cd hadiya-frontend
+                        cd hadiya-front-end
                         npm install
                     '''
                 }
@@ -34,7 +34,7 @@ pipeline {
                 script {
                     // Build the Angular project
                     sh '''
-                        cd hadiya-frontend
+                        cd hadiya-front-end
                         npm run build --prod
                     '''
                 }
