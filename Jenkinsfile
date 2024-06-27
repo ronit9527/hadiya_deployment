@@ -5,7 +5,7 @@ pipeline {
         REGION = "us-west-1"
         REPOSITORY_NAME = "hadiya"
         IMAGE_TAG = "${env.BUILD_NUMBER}"
-        ECR_URI = "public.ecr.aws/x8p9m7t4/hadiya/${REPOSITORY_NAME}:${IMAGE_TAG}"
+        ECR_URI = "public.ecr.aws/x8p9m7t4/${REPOSITORY_NAME}:${IMAGE_TAG}"
         ECR_REGISTRY = "public.ecr.aws/x8p9m7t4"
         
     }
