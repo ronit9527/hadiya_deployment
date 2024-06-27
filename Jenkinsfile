@@ -66,7 +66,7 @@ pipeline {
                 script {
                     sh ''' 
                       aws eks update-kubeconfig --name hadiya-cluster --region ${REGION}
-                      kubectl apply -f "deployment.yml"
+                      kubectl apply -f deployment.yml
                     '''
                 }
         }
