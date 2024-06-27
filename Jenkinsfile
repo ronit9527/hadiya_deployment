@@ -56,7 +56,8 @@ pipeline {
                     sh '''
                         dir=`pwd`
                         echo "$dir"
-                        sed -i 's|public.ecr.aws/x8p9m7t4/[^:]*:latest|public.ecr.aws/x8p9m7t4/'${IMAGE_TAG}':latest|' deployment.yml
+                        sed -i "s|public.ecr.aws/x8p9m7t4/hadiya:latest|${ECR_REGISTRY}/${REPOSITORY_NAME}:${BUILD_NUMBER}|" deployment.yml
+                        cat deployment.yml
                     '''
                 }
             }
