@@ -4,8 +4,7 @@ pipeline {
     environment {
         REGION = "us-west-1"
         REPOSITORY_NAME = "hadiya"
-        def buildNumber = env.BUILD_NUMBER
-        IMAGE_TAG = "${buildNumber}"
+        IMAGE_TAG = "${env.BUILD_NUMBER}"
         ECR_URI = "730335380624.dkr.ecr.${REGION}.amazonaws.com/${REPOSITORY_NAME}:${IMAGE_TAG}"
         ECR_REGISTRY = "730335380624.dkr.ecr.${REGION}.amazonaws.com"
     }
