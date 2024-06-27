@@ -45,7 +45,7 @@ pipeline {
                 script {
                     // Upload files to S3
                     sh '''
-                        aws s3 sync hadiya-front-end/dist/* s3://${S3_BUCKET} --region us-west-1 --delete
+                        aws s3 cp hadiya-front-end/dist/* s3://${S3_BUCKET} --region us-west-1 --delete
                     '''
                 }
             }
