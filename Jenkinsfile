@@ -22,6 +22,7 @@ pipeline {
                 script {
                     // Build Docker image
                     sh '''
+                        cd hadiya-backend
                         docker build -t ${REPOSITORY_NAME}:${IMAGE_TAG} .
                     '''
                 }
@@ -47,6 +48,11 @@ pipeline {
                     '''
                 }
             }
+        }
+    }
+    post {   
+        always {
+            cleanWs() // Clean up workspace after the build
         }
     }
 }
