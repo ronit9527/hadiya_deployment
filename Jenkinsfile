@@ -63,11 +63,13 @@ pipeline {
         }
     stage('Integrate Jenkins with EKS Cluster and Deploy App') {
             steps {
+                withAWS(credentials: '26970895-9275-456c-aa00-bf18d582d0e1', region: '${REGION}') {
                 script {
                     sh ''' 
                       aws eks update-kubeconfig --name hadiya-cluster --region ${REGION}
                       kubectl apply -f deployment.yml
                     '''
+                }
                 }
         }
     }
