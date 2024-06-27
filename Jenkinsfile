@@ -29,5 +29,41 @@ pipeline {
                 }
             }
         }
-}
+    stage('Login to ECR') {
+            steps {
+                script {
+                    // Login to Amazon ECR
+                    sh '''
+                        aws ecr-public get-login-password --region ${REGION} | docker login --username AWS --password-stdin public.ecr.aws/x8p9m7t4
+                    '''
+                }
+            }
+        }
+    stage('Tag and Push Docker Image') {
+            steps {
+                script {
+                    // Tag and push the Docker image to ECR
+                    sh '''
+                        docker tag ${REPOSITORY_NAME}:${IMAGE_TAG} ${ECR_URI}
+                        docker push ${ECR_URI}
+                    '''
+                }
+            }
+        }
+    stage('Integrate Jenkins with EKS Cluster and Deploy App') {
+            steps {
+                script {
+                    sh ''' 
+                      cd ..
+                      aws eks update-kubeconfig --name hadiya-cluster --region ${REGION}
+                      kubectl apply -f deployment.yml"
+                    '''
+                }
+        }
+    }
+    post {   
+        always {
+            cleanWs() // Clean up workspace after the build
+        }
+    }
 }
