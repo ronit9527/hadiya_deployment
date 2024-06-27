@@ -45,7 +45,7 @@ pipeline {
                 script {
                     // Upload files to S3
                     sh '''
-                       for file in hadiya-frontend/dist/*; do
+                       for file in hadiya-front-end/dist/*; do
                             aws s3 cp $file s3://${S3_BUCKET}/$(basename $file) --region ${REGION}
                        done 
                     '''
