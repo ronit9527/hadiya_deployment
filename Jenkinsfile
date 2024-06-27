@@ -50,11 +50,20 @@ pipeline {
                 }
             }
         }
+    stage('Update Deployment File') {
+            steps {
+                script {
+                    sh '''
+                        cd ..
+                        sed -i 's|public.ecr.aws/x8p9m7t4/[^:]*:latest|public.ecr.aws/x8p9m7t4/'${IMAGE_TAG}':latest|' deployment.yml
+                    '''
+                }
+            }
+        }
     stage('Integrate Jenkins with EKS Cluster and Deploy App') {
             steps {
                 script {
                     sh ''' 
-                      cd ..
                       aws eks update-kubeconfig --name hadiya-cluster --region ${REGION}
                       kubectl apply -f deployment.yml"
                     '''
