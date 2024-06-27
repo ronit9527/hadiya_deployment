@@ -1,1 +1,58 @@
-kwdbv
+pipeline {
+    agent any
+    
+    environment {
+        S3_BUCKET = "hadiya-bucket"
+    }
+  tools {
+        nodejs "NodeJS 14"  // The name you provided in the Global Tool Configuration
+    }
+    
+    stages {
+         stage('Clone repository') { 
+            steps { 
+                script{
+                checkout scm
+                }
+            }
+        }
+      
+  }
+  stage('Install Dependencies') {
+            steps {
+                script {
+                    // Install project dependencies
+                    sh '''
+                        cd hadiya-frontend
+                        npm install
+                    '''
+                }
+            }
+        }
+  stage('Build Angular Project') {
+            steps {
+                script {
+                    // Build the Angular project
+                    sh '''
+                        cd hadiya-frontend
+                        npm run build --prod
+                    '''
+                }
+            }
+        }
+  stage('Deploy to S3') {
+            steps {
+                script {
+                    // Upload files to S3
+                    sh '''
+                        aws s3 sync hadiya-front-end/dist/* s3://${S3_BUCKET} --region us-west-1 --delete
+                    '''
+                }
+            }
+        }
+    post {   
+        always {
+            cleanWs() // Clean up workspace after the build
+        }
+    }
+}
