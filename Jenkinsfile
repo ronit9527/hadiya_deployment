@@ -34,7 +34,7 @@ pipeline {
                 script {
                     // Login to Amazon ECR
                     sh '''
-                        aws ecr-public get-login-password --region ${REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY}
+                        aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/x8p9m7t4
                     '''
                 }
             }
